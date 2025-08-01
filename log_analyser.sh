@@ -4,6 +4,11 @@ set -e
 
 log_file="/var/log/nginx/access.log"
 
+if [ ! -f "$log_file" ]; then
+    echo "log file not found"
+    exit 1
+fi
+
 echo "Top 5 ip addresses with most requests"
 awk '{print $1}' "$log_file" | sort | uniq -c | sort -nr | head -5
 
